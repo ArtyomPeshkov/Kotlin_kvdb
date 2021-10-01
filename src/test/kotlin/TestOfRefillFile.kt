@@ -15,7 +15,7 @@ internal class TestOfRefillFile {
     fun refillFileTest1() {
         File("src/test/resources/fileToRefill.txt").delete()
         refillFile(File("src/test/resources/fileToRefill.txt"), testMap)
-        assertEquals(testMap, getDataFromDB(File("src/test/resources/fileToRefill.txt")))
+        assertEquals(testMap, getDataFromFile(File("src/test/resources/fileToRefill.txt")))
     }
 
 }

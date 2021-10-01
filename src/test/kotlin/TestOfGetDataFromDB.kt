@@ -12,7 +12,7 @@ internal class TestOfGetDataFromDB {
                 Pair("key4", mutableListOf("val5")),
                 Pair("lol", mutableListOf("nothing")),
                 Pair("hmmm...", mutableListOf(""))
-            ).toString(), getDataFromDB(File("src/test/resources/getFromHere.txt")).toString()
+            ).toString(), getDataFromFile(File("src/test/resources/getFromHere.txt")).toString()
         )
     }
 

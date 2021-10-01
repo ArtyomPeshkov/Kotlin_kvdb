@@ -1,25 +1,5 @@
 import java.io.File
-import java.time.LocalDateTime
 
-
-/**
-@brief
-Функция проверяет правильное ли число ввёл пользователь.
-@detailed
-Функция будет просить ввести число, находящееся в заданном диапазоне, пока пользователь не введёт корректное число.
-@param
-Функция принимает на вход границы диапазона в котором должно находиться введённое число.
-@return
-Когда пользователь ввёл корректное число, функция возвращает его.
- */
-fun  checkCorrectInput(minVal: Int, maxVal: Int): Int {
-    var someNumber = readLine()
-    while (someNumber == null || someNumber.toIntOrNull() == null || someNumber.toInt() < minVal || someNumber.toInt() > maxVal) {
-        println("Write correct number")
-        someNumber = readLine()
-    }
-    return someNumber.toInt()
-}
 
 /**
 @brief
@@ -30,17 +10,16 @@ fun  checkCorrectInput(minVal: Int, maxVal: Int): Int {
 @param
 Функция принимает на вход файл, который надо перезаписать и map из которого надо взять данные.
  */
-fun refillFile(dataBase: File, data: LinkedHashMap<String,MutableList<String>>)
-{
+fun refillFile(dataBase: File, data: LinkedHashMap<String, MutableList<String>>) {
     dataBase.writeText("")
-    data.forEach{
-        dataBase.appendText("${it.key }\n")
-        val value=data[it.key]?.first()
+    data.forEach {
+        dataBase.appendText("${it.key}\n")
+        val value = data[it.key]?.first()
         dataBase.appendText("${value}\n")
     }
 }
 
-fun readFromUserFile(file: File){
+fun readFromUserFile(file: File) {
     TODO()
 }
 
@@ -55,11 +34,10 @@ fun readFromUserFile(file: File){
 @return
 Функция возвращает ключ (строку).
  */
-fun checkValueForKeyIsNotEmpty(dataBase: LinkedHashMap<String,MutableList<String>>):String{
+fun checkValueForKeyIsNotEmpty(dataBase: LinkedHashMap<String, MutableList<String>>): String {
     println("Введите ключ")
     var userKey = readLine()
-    while (userKey==null || dataBase[userKey].isNullOrEmpty() )
-    {
+    while (userKey == null || dataBase[userKey].isNullOrEmpty()) {
         println("Invalid key, пожалуйста, укажите другой ключ")
         userKey = readLine()
     }
@@ -77,11 +55,10 @@ fun checkValueForKeyIsNotEmpty(dataBase: LinkedHashMap<String,MutableList<String
 @return
 Функция возвращает ключ (строку).
  */
-fun checkValueForKeyIsEmpty(dataBase: LinkedHashMap<String,MutableList<String>>):String{
+fun checkValueForKeyIsEmpty(dataBase: LinkedHashMap<String, MutableList<String>>): String {
     println("Введите ключ")
     var userKey = readLine()
-    while (userKey==null || dataBase[userKey]?.isNotEmpty() == true)
-    {
+    while (userKey == null || dataBase[userKey]?.isNotEmpty() == true) {
         println("Invalid key or value already exist, пожалуйста, укажите другой ключ")
         userKey = readLine()
     }
@@ -96,11 +73,10 @@ fun checkValueForKeyIsEmpty(dataBase: LinkedHashMap<String,MutableList<String>>)
 @return
 Функция возвращает введённое значение (строку).
  */
-fun checkInputValue():String{
+fun checkInputValue(): String {
     println("Введите значение")
     var userValue = readLine()
-    while (userValue==null )
-    {
+    while (userValue == null) {
         println("Invalid value, пожалуйста, укажите другое значение")
         userValue = readLine()
     }
@@ -111,23 +87,42 @@ fun checkInputValue():String{
 @brief
 Функция считывает из файла с базой данных значения и записывает их в map.
 @detailed
-Функция двигается по файлу и считывает строки с чётными индексами, как ключи, а строки с нечётнвми индексами, как значения.
+Функция двигается по файлу и считывает строки с чётными индексами, как ключи, а строки с нечётными индексами как значения.
 @param
 Функция принимает на вход файл, в котором хранится база данных.
 @return
 Функция возвращает map с базой данных.
  */
-fun getDataFromFile(dataBaseFile: File): LinkedHashMap<String, MutableList<String>>{
-    var key=""
-    val res = linkedMapOf<String,MutableList<String>>()
+fun getDataFromFile(dataBaseFile: File): LinkedHashMap<String, MutableList<String>> {
+    var key = ""
+    val res = linkedMapOf<String, MutableList<String>>()
     dataBaseFile.readLines().forEachIndexed { index, string ->
-        when(index%2/*3*/) {
-            0 -> {res[string] = mutableListOf();key=string}
+        when (index % 2/*3*/) {
+            0 -> {
+                res[string] = mutableListOf();key = string
+            }
             1 -> res[key]?.add(string)
             //2 -> dataBase[key]?.addAll(string.split(' '))
         }
     }
     return res
+}
+
+fun commandList() {
+    println("Команды:")
+    println("Напишите 'add', чтобы добавить новый элемент в БД")
+    println("Напишите 'update', чтобы изменить значение в БД по ключу")
+    println("Напишите 'del', чтобы удалить значение из БД по ключу")
+    println("Напишите 'find', чтобы вывести элемент по ключу")
+    println("Напишите 'check', чтобы проверить, лежит ли какое-то значение по заданному ключу")
+    println("Напишите 'save', чтобы сохранить изменения в бд")
+    println("Напишите 'load save', чтобы сохранить изменения в бд")
+    println("Напишите 'print all', чтобы вывести ключи и значения вашей БД")
+    println("Напишите 'clear', чтобы очистить вашу БД")
+    println("Напишите 'q', чтобы вернуться в менеджер свои БД")
+
+    println("Write anything to continue")
+    readLine()
 }
 
 /**
@@ -140,58 +135,74 @@ fun getDataFromFile(dataBaseFile: File): LinkedHashMap<String, MutableList<Strin
 Функция принимает на вход файл, в котором хранится база данных.
  */
 fun openDataBase(dataBaseFile: File) {
-    val dataBase = getDataFromFile(dataBaseFile)
+    var dataBase = getDataFromFile(dataBaseFile)
 
 
     while (true) {
-        println("Команды:")
-        println("Напишите 'add', чтобы добавить новый элемент в БД")
-        println("Напишите 'change', чтобы изменить значение в БД по ключу")
-        println("Напишите 'del', чтобы удалить значение из БД по ключу")
-        println("Напишите 'find', чтобы вывести элемент по ключу")
-        println("Напишите 'print all', чтобы вывести ключи и значения вашей БД")
-        println("Напишите 'q', чтобы выйти из БД")
+        println("Введите команду или напишите 'list', чтобы посмотреть доступные команды")
 
         var userInput: String
         while (true) {
             userInput = readLine().toString()
             when (userInput) {
-                "change", "Change", "CHANGE" -> {
+                "list", "List", "LIST" -> {
+                    commandList()
+                    break
+                }
+                "update", "Update", "UPDATE" -> {
                     val userKey = checkValueForKeyIsNotEmpty(dataBase)
                     val userValue = checkInputValue()
                     dataBase[userKey]?.set(0, userValue)
                     /*TODO("update date of change")*/
-                    refillFile(dataBaseFile,dataBase)
                     break
                 }
                 "add", "Add", "ADD" -> {
                     val userKey = checkValueForKeyIsEmpty(dataBase)
                     val userValue = checkInputValue()
                     dataBase[userKey] = mutableListOf(userValue/*,TODO("add date of creation and date of change")*/)
-                    refillFile(dataBaseFile,dataBase)
                     break
                 }
                 "del", "Del", "DEL" -> {
                     val userKey = checkValueForKeyIsNotEmpty(dataBase)
                     dataBase.remove(userKey)
-                    refillFile(dataBaseFile,dataBase)
                     break
                 }
                 "find", "Find", "FIND" -> {
                     val userKey = checkValueForKeyIsNotEmpty(dataBase)
                     println("key: $userKey value: ${dataBase[userKey]}")
+
+                    println("Write anything to continue")
+                    readLine()
+                    break
+                }
+                "save", "Save", "SAVE" -> {
+                    refillFile(dataBaseFile, dataBase)
+                    println("Changes saved")
+                    break
+                }
+                "load save", "Load save", "LOAD SAVE" -> {
+                    dataBase = getDataFromFile(dataBaseFile)
+                    println("Save loaded")
                     break
                 }
                 "print all", "Print All", "PRINT ALL" -> {
-                    refillFile(dataBaseFile,dataBase)
-                    dataBase.forEach{
-                        println("key: ${it.key} value: ${it.value}" )
+                    refillFile(dataBaseFile, dataBase)
+                    dataBase.forEach {
+                        println("key: ${it.key} value: ${it.value}")
                     }
                     println("Write anything to continue")
                     readLine()
                     break
                 }
-                "q", "Q" -> return
+                "clear", "Clear", "CLEAR" -> {
+                    dataBase.clear()
+                    println("База данных очищена")
+                    break
+                }
+                "q", "Q" -> {
+                    refillFile(dataBaseFile, dataBase)
+                    return
+                }
                 else -> println("Unknown command")
             }
         }

@@ -2,6 +2,7 @@ import java.io.File
 import kotlin.test.*
 
 internal class TestDataBaseCreator {
+    //Функция аналогична той, что используется в коде, но пользовательский ввод симулируется массивом
     private fun dataBaseCreator(names: List<String?>): String? {
         names.forEach { dataBaseName ->
             while (dataBaseName == null || dataBaseName.isBlank() || dataBaseName.findAnyOf(
