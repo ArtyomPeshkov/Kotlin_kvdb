@@ -10,11 +10,11 @@ import java.io.File
 @param
 Функция принимает на вход файл, который надо перезаписать и map из которого надо взять данные.
  */
-fun refillFile(dataBase: File, data: LinkedHashMap<String, MutableList<String>>) {
+fun refillFile(dataBase: File, data: LinkedHashMap<String, String>) {
     dataBase.writeText("")
     data.forEach {
         dataBase.appendText("${it.key}\n")
-        val value = data[it.key]?.first()
+        val value = data[it.key]
         dataBase.appendText("${value}\n")
     }
 }
@@ -34,7 +34,7 @@ fun readFromUserFile(file: File) {
 @return
 Функция возвращает ключ (строку).
  */
-fun checkValueForKeyIsNotEmpty(dataBase: LinkedHashMap<String, MutableList<String>>): String {
+fun checkValueForKeyIsNotEmpty(dataBase: LinkedHashMap<String, String>): String {
     println("Введите ключ")
     var userKey = readLine()
     while (userKey == null || dataBase[userKey].isNullOrEmpty()) {
@@ -55,7 +55,7 @@ fun checkValueForKeyIsNotEmpty(dataBase: LinkedHashMap<String, MutableList<Strin
 @return
 Функция возвращает ключ (строку).
  */
-fun checkValueForKeyIsEmpty(dataBase: LinkedHashMap<String, MutableList<String>>): String {
+fun checkValueForKeyIsEmpty(dataBase: LinkedHashMap<String, String>): String {
     println("Введите ключ")
     var userKey = readLine()
     while (userKey == null || dataBase[userKey]?.isNotEmpty() == true) {
@@ -93,16 +93,16 @@ fun checkInputValue(): String {
 @return
 Функция возвращает map с базой данных.
  */
-fun getDataFromFile(dataBaseFile: File): LinkedHashMap<String, MutableList<String>> {
+fun getDataFromFile(dataBaseFile: File): LinkedHashMap<String, String> {
     var key = ""
-    val res = linkedMapOf<String, MutableList<String>>()
+    val res = linkedMapOf<String, String>()
     dataBaseFile.readLines().forEachIndexed { index, string ->
-        when (index % 2/*3*/) {
+        when (index % 2) {
             0 -> {
-                res[string] = mutableListOf();key = string
+                res[string] = ""
+                key = string
             }
-            1 -> res[key]?.add(string)
-            //2 -> dataBase[key]?.addAll(string.split(' '))
+            1 -> res[key]=string
         }
     }
     return res
@@ -141,10 +141,9 @@ fun openDataBase(dataBaseFile: File) {
     while (true) {
         println("Введите команду или напишите 'list', чтобы посмотреть доступные команды")
 
-        var userInput: String
         while (true) {
-            userInput = readLine().toString()
-            when (userInput) {
+            val userInput = readLine()
+            when (userInput?.trim()?:"Mistake") {
                 "list", "List", "LIST" -> {
                     commandList()
                     break
@@ -152,14 +151,13 @@ fun openDataBase(dataBaseFile: File) {
                 "update", "Update", "UPDATE" -> {
                     val userKey = checkValueForKeyIsNotEmpty(dataBase)
                     val userValue = checkInputValue()
-                    dataBase[userKey]?.set(0, userValue)
-                    /*TODO("update date of change")*/
+                    dataBase[userKey]= userValue
                     break
                 }
                 "add", "Add", "ADD" -> {
                     val userKey = checkValueForKeyIsEmpty(dataBase)
                     val userValue = checkInputValue()
-                    dataBase[userKey] = mutableListOf(userValue/*,TODO("add date of creation and date of change")*/)
+                    dataBase[userKey] = userValue
                     break
                 }
                 "del", "Del", "DEL" -> {

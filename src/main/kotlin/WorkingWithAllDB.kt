@@ -10,12 +10,10 @@ import java.io.File
 @return
 Когда пользователь ввёл корректное число, функция возвращает его.
  */
-
-
 fun checkCorrectInput(minVal: Int, maxVal: Int): Int {
     var someNumberOrFileName = readLine()
 //проверка корректности числа
-    while (someNumberOrFileName == null || someNumberOrFileName.toIntOrNull() == null || someNumberOrFileName.toInt() < minVal || someNumberOrFileName.toInt() > maxVal) {
+    while (someNumberOrFileName?.toIntOrNull() == null || someNumberOrFileName.toInt() < minVal || someNumberOrFileName.toInt() > maxVal) {
         println("Write correct number or file name")
         someNumberOrFileName = readLine()
     }
@@ -51,6 +49,7 @@ fun dataBaseCreator(folderName: String) {
         dataBaseName = readLine()
     }
     // Возвращает true, если файл был создан
+    File(folderName).mkdir()
     val isNewFileCreated: Boolean = File("$folderName/$dataBaseName.txt").createNewFile()
     if (isNewFileCreated) {
         println("$dataBaseName is created successfully.")
@@ -71,6 +70,7 @@ fun allDataBaseFiles(folderName: String): List<File> {
     val fileNames = mutableListOf<File>()
     var numberInOutput = 1
     //Создаёт файл в нужной директории
+    File(folderName).mkdir()
     File(folderName).walk().forEach { file ->
         if (file.isFile) {
             val fileName =
@@ -97,10 +97,9 @@ fun dataBasesManager(folderName: String = "dataBases") {
         println("Напишите 'del', чтобы удалить одну из своих БД")
         println("Напишите 'print', чтобы увидеть список своих БД")
         println("Напишите 'q', чтобы выйти из утилиты")
-        var userInput: String
         while (true) {
-            userInput = readLine().toString()
-            when (userInput) {
+           val userInput = readLine()
+            when (userInput?.trim() ?:"Mistake") {
                 "new", "New", "NEW" -> {
                     dataBaseCreator(folderName);break
                 }
