@@ -14,7 +14,7 @@ testAllOutput.txt - ожидаемый вывод
 internal class TestAll {
     private val standardIn = System.`in`
     private val standardOut = System.out
-    private val streamIn = ByteArrayInputStream(File("src/test/resources/testAll.txt").readBytes())
+    private val streamIn = ByteArrayInputStream(File("src/test/resources/testAll/testAll.txt").readBytes())
     private val streamOut = ByteArrayOutputStream()
 
     @BeforeTest
@@ -35,7 +35,7 @@ internal class TestAll {
         println("Welcome to data base manager")
         dataBasesManager("dataTest")
         var str = ""
-        File("src/test/resources/testAllOutput.txt").forEachLine {
+        File("src/test/resources/testAll/testAllOutput.txt").forEachLine {
             str += "$it\r\n"
         }
         assertEquals(str.trim(),streamOut.toString().trim())

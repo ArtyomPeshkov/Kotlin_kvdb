@@ -4,15 +4,15 @@ import kotlin.test.*
 
 internal class TestOfGetDataFromDB {
     @Test
-    fun getDataFromDBTest1() {
+    fun getDataFromDBTest() {
         assertEquals(
             linkedMapOf(
-                Pair("key1", mutableListOf("val1")),
-                Pair("key2", mutableListOf("val2")),
-                Pair("key4", mutableListOf("val5")),
-                Pair("lol", mutableListOf("nothing")),
-                Pair("hmmm...", mutableListOf(""))
-            ).toString(), getDataFromFile(File("src/test/resources/getFromHere.txt")).toString()
+                Pair("key1", "val1"),
+                Pair("key2", "val2"),
+                Pair("key4", "val5"),
+                Pair("lol", "nothing"),
+                Pair("hmmm...", "")
+            ).toString(), getDataFromFile(File("src/test/resources/getFromDB/getFromHere.txt")).toString()
         )
     }
 

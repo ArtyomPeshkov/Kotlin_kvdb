@@ -39,10 +39,7 @@ fun dataBaseCreator(folderName: String) {
                 "/",
                 ":",
                 ",",
-                " ",
-                "\"",
-                "'"
-            )
+                " ",            )
         ) != null
     ) {
         println("Write correct and not empty file name")

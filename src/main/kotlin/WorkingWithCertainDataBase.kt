@@ -37,7 +37,7 @@ fun readFromUserFile(file: File) {
 fun checkValueForKeyIsNotEmpty(dataBase: LinkedHashMap<String, String>): String {
     println("Введите ключ")
     var userKey = readLine()
-    while (userKey == null || dataBase[userKey].isNullOrEmpty()) {
+    while (userKey == null || dataBase[userKey].isNullOrBlank()) {
         println("Invalid key, пожалуйста, укажите другой ключ")
         userKey = readLine()
     }
