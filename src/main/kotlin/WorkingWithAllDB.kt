@@ -14,7 +14,7 @@ fun checkCorrectInput(minVal: Int, maxVal: Int): Int {
     var someNumberOrFileName = readLine()
 //проверка корректности числа
     while (someNumberOrFileName?.toIntOrNull() == null || someNumberOrFileName.toInt() < minVal || someNumberOrFileName.toInt() > maxVal) {
-        println("Write correct number or file name")
+        println("Введите корректное число")
         someNumberOrFileName = readLine()
     }
     return someNumberOrFileName.toInt()
@@ -42,16 +42,16 @@ fun dataBaseCreator(folderName: String) {
                 " ",            )
         ) != null
     ) {
-        println("Write correct and not empty file name")
+        println("Введите корректное, непустое имя файла")
         dataBaseName = readLine()
     }
     // Возвращает true, если файл был создан
     File(folderName).mkdir()
     val isNewFileCreated: Boolean = File("$folderName/$dataBaseName.txt").createNewFile()
     if (isNewFileCreated) {
-        println("$dataBaseName is created successfully.")
+        println("$dataBaseName успешно создан.")
     } else {
-        println("$dataBaseName already exists.")
+        println("$dataBaseName уже существует.")
     }
 }
 
@@ -61,7 +61,7 @@ fun dataBaseCreator(folderName: String) {
 @detailed
 Функция записывает все файлы лежащие в src\main\resources в List и выводит пронумерованный список файлов на экран.
 @return
-Функция возвращает список файлов (которые по сути являются базами данных), лежащих в src\main\resources.
+Функция возвращает список файлов (которые по сути являются базами данных), лежащих в dataBases.
  */
 fun allDataBaseFiles(folderName: String): List<File> {
     val fileNames = mutableListOf<File>()
@@ -104,11 +104,11 @@ fun dataBasesManager(folderName: String = "dataBases") {
                     val allFiles = allDataBaseFiles(folderName)
 
                     if (allFiles.isEmpty()) {
-                        println("You do not have any data-bases")
+                        println("У вас нет ни одной базы данных")
                         break
                     }
 
-                    println("Choose file (write a number from 1 to ${allFiles.size})")
+                    println("Выберите файл (введите число от 1 до ${allFiles.size})")
                     val file = checkCorrectInput(1, allFiles.size)
                     openDataBase(allFiles[file - 1])
                     break
@@ -117,11 +117,11 @@ fun dataBasesManager(folderName: String = "dataBases") {
                     val allFiles = allDataBaseFiles(folderName)
 
                     if (allFiles.isEmpty()) {
-                        println("You do not have any data-bases")
+                        println("У вас нет ни одной базы данных")
                         break
                     }
 
-                    println("Choose file (write a number from 1 to ${allFiles.size})")
+                    println("Выберите файл (введите число от 1 до${allFiles.size})")
                     val file = checkCorrectInput(1, allFiles.size)
                     println(allFiles[file - 1].toString())
                     allFiles[file - 1].delete()
@@ -129,16 +129,16 @@ fun dataBasesManager(folderName: String = "dataBases") {
                 }
                 "print", "Print", "PRINT" -> {
                     if (allDataBaseFiles(folderName).isEmpty()) {
-                        println("You do not have any data-bases")
+                        println("У вас нет ни одной базы данных")
                         break
                     }
 
-                    println("Write anything to continue")
+                    println("Напишите что-нибудь, чтобы продолжить")
                     readLine()
                     break
                 }
                 "q", "Q" -> return
-                else -> println("Unknown command")
+                else -> println("Неизвестная команда")
             }
         }
     }

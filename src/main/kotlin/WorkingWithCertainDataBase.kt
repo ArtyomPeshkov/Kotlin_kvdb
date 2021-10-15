@@ -19,10 +19,6 @@ fun refillFile(dataBase: File, data: LinkedHashMap<String, String>) {
     }
 }
 
-fun readFromUserFile(file: File) {
-    TODO()
-}
-
 /**
 @brief
 Функция проверяет, что по введённому ключу существует значение.
@@ -38,7 +34,7 @@ fun checkValueForKeyIsNotEmpty(dataBase: LinkedHashMap<String, String>): String 
     println("Введите ключ")
     var userKey = readLine()
     while (userKey == null || dataBase[userKey].isNullOrBlank()) {
-        println("Invalid key, пожалуйста, укажите другой ключ")
+        println("Неверный ключ, пожалуйста, укажите другой ключ")
         userKey = readLine()
     }
     return userKey
@@ -59,7 +55,7 @@ fun checkValueForKeyIsEmpty(dataBase: LinkedHashMap<String, String>): String {
     println("Введите ключ")
     var userKey = readLine()
     while (userKey == null || dataBase[userKey]?.isNotEmpty() == true) {
-        println("Invalid key or value already exist, пожалуйста, укажите другой ключ")
+        println("Неверный ключ или значение уже существует, пожалуйста, укажите другой ключ")
         userKey = readLine()
     }
     return userKey
@@ -77,7 +73,7 @@ fun checkInputValue(): String {
     println("Введите значение")
     var userValue = readLine()
     while (userValue == null) {
-        println("Invalid value, пожалуйста, укажите другое значение")
+        println("Неверное значение, пожалуйста, укажите другое значение")
         userValue = readLine()
     }
     return userValue
@@ -121,7 +117,7 @@ fun commandList() {
     println("Напишите 'clear', чтобы очистить вашу БД")
     println("Напишите 'q', чтобы вернуться в менеджер свои БД")
 
-    println("Write anything to continue")
+    println("Напишите что-нибудь, чтобы продолжить")
     readLine()
 }
 
@@ -167,28 +163,28 @@ fun openDataBase(dataBaseFile: File) {
                 }
                 "find", "Find", "FIND" -> {
                     val userKey = checkValueForKeyIsNotEmpty(dataBase)
-                    println("key: $userKey value: ${dataBase[userKey]}")
+                    println("ключ: $userKey значение: ${dataBase[userKey]}")
 
-                    println("Write anything to continue")
+                    println("Напишите что-нибудь, чтобы продолжить")
                     readLine()
                     break
                 }
                 "save", "Save", "SAVE" -> {
                     refillFile(dataBaseFile, dataBase)
-                    println("Changes saved")
+                    println("Изменения сохранены")
                     break
                 }
                 "load save", "Load save", "LOAD SAVE" -> {
                     dataBase = getDataFromFile(dataBaseFile)
-                    println("Save loaded")
+                    println("Сохранение загружено")
                     break
                 }
                 "print all", "Print All", "PRINT ALL" -> {
                     refillFile(dataBaseFile, dataBase)
                     dataBase.forEach {
-                        println("key: ${it.key} value: ${it.value}")
+                        println("ключ: ${it.key} значение: ${it.value}")
                     }
-                    println("Write anything to continue")
+                    println("Напишите что-нибудь, чтобы продолжить")
                     readLine()
                     break
                 }
@@ -201,7 +197,7 @@ fun openDataBase(dataBaseFile: File) {
                     refillFile(dataBaseFile, dataBase)
                     return
                 }
-                else -> println("Unknown command")
+                else -> println("Неизвестная команда")
             }
         }
     }

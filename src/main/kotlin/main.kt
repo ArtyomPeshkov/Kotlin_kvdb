@@ -1,4 +1,7 @@
+import java.io.File
+
 fun main() {
-    println("Welcome to data base manager")
+    File("dataBases/").mkdir()
+    println("Добро пожаловать в менеджер баз данных")
     dataBasesManager()
 }
